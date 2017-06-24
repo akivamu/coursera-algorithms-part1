@@ -3,58 +3,104 @@ package week1.uf;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class UFClient {
+    private static final String INPUT_PATH = "input/week1/uf/";
+    private static final boolean VERBOSE = false;
 
-    private int[][] operations = {
-            {4, 3},
-            {3, 8},
-            {6, 5},
-            {9, 4},
-            {2, 1},
-            {8, 9},
-            {5, 0},
-            {7, 2},
-            {6, 1},
-            {1, 0},
-            {6, 7}
-    };
+    private class TestSpec {
+        private class Operation {
+            int p;
+            int q;
 
-    private void helper(UF uf) {
-        for (int i = 0; i < operations.length; i++) {
-            int p = operations[i][0];
-            int q = operations[i][1];
-            if (!uf.isConnected(p, q)) {
-                System.out.println("Op#" + i + ": " + p + " and " + q + " are not connected. Now merge their components.");
-                uf.union(p, q);
-            } else {
-                System.out.println("Op#" + i + ": " + p + " and " + q + " are connected.");
+            Operation(int p, int q) {
+                this.p = p;
+                this.q = q;
             }
-            Assert.assertTrue("Op#" + i + ": " + p + " and " + q + " should connected", uf.isConnected(p, q));
+        }
+
+        private final int n;
+        private final ArrayList<Operation> operations;
+
+        TestSpec(String inputFileName) throws FileNotFoundException {
+            System.out.println("Reading input from " + inputFileName);
+            Scanner scanner = new Scanner(new File(INPUT_PATH + inputFileName));
+            n = scanner.nextInt();
+            operations = new ArrayList<>();
+
+            while (scanner.hasNextInt()) {
+                operations.add(new Operation(scanner.nextInt(), scanner.nextInt()));
+            }
+
+            scanner.close();
+        }
+
+        private void perform(Class clazz) {
+            System.out.println("==== " + clazz.getSimpleName() + " ====");
+
+            // Construct UF
+            UF uf;
+            try {
+                Constructor constructor = clazz.getDeclaredConstructor(int.class);
+                uf = (UF) constructor.newInstance(n);
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            long startTime = System.currentTimeMillis();
+
+            // Perform operations
+            for (int i = 0; i < operations.size(); i++) {
+                int p = operations.get(i).p;
+                int q = operations.get(i).q;
+                if (!uf.isConnected(p, q)) {
+                    log("Op#" + i + ": " + p + " and " + q + " are not connected. Now merge their components.");
+                    uf.union(p, q);
+                } else {
+                    log("Op#" + i + ": " + p + " and " + q + " are connected.");
+                }
+                Assert.assertTrue("Op#" + i + ": " + p + " and " + q + " should connected", uf.isConnected(p, q));
+            }
+
+            System.out.println("     Execute time: " + (System.currentTimeMillis() - startTime) + "ms");
         }
     }
 
-    @Test
-    public void testQuickFind() {
-        helper(new QuickFindUF(10));
+
+    private void log(String msg) {
+        if (VERBOSE) {
+            System.out.println(msg);
+        }
+    }
+
+    private void performAllAlgorithms(String inputFileName) throws FileNotFoundException {
+        TestSpec testSpec = new TestSpec(inputFileName);
+        testSpec.perform(WeightedQuickUnionWithPathCompressionUF.class);
+        testSpec.perform(PathCompressionQuickUnionUF.class);
+        testSpec.perform(WeightedQuickUnionUF.class);
+        testSpec.perform(QuickUnionUF.class);
+        testSpec.perform(QuickFindUF.class);
     }
 
     @Test
-    public void testQuickUnion() {
-        helper(new QuickUnionUF(10));
+    public void testAllTiny() throws FileNotFoundException {
+        performAllAlgorithms("tinyUF.txt");
     }
 
     @Test
-    public void testWeightedQuickUnion() {
-        helper(new WeightedQuickUnionUF(10));
+    public void testAllMedium() throws FileNotFoundException {
+        performAllAlgorithms("mediumUF.txt");
     }
 
     @Test
-    public void testPathCompressionQuickUnion() {
-        helper(new PathCompressionQuickUnionUF(10));
-    }
-
-    @Test
-    public void testWeightedQuickUnionWithPathCompressionUF() {
-        helper(new WeightedQuickUnionWithPathCompressionUF(10));
+    public void testAllLarge() throws FileNotFoundException {
+        performAllAlgorithms("largeUF.txt");
     }
 }
