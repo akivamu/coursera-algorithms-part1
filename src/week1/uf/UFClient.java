@@ -42,4 +42,9 @@ public class UFClient {
     public void testQuickUnion() {
         helper(new QuickUnionUF(10));
     }
+
+    @Test
+    public void testWeightedQuickUnion() {
+        helper(new WeightedQuickUnionUF(10));
+    }
 }

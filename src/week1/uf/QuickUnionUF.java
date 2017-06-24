@@ -10,7 +10,7 @@ class QuickUnionUF extends UF {
     /**
      * Internal structure to store parent ID of one object. Making it become a tree structure.
      */
-    private final int[] ids;
+    protected final int[] ids;
 
     /**
      * Construct and initialize ID array.
@@ -34,7 +34,7 @@ class QuickUnionUF extends UF {
      * @param p
      * @return
      */
-    private int findRootIndex(int p) {
+    protected int findRootIndex(int p) {
         int index = ids[p];
         while (ids[index] != index) {
             index = ids[index];
