@@ -47,4 +47,9 @@ public class UFClient {
     public void testWeightedQuickUnion() {
         helper(new WeightedQuickUnionUF(10));
     }
+
+    @Test
+    public void testPathCompressionQuickUnion() {
+        helper(new PathCompressionQuickUnionUF(10));
+    }
 }
