@@ -8,6 +8,7 @@ public class Percolation {
     private final int n;
     private final boolean[][] sites;
     private final WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF ufTopSite;
     private int openSites;
 
     // create n-by-n grid, with all sites blocked
@@ -18,6 +19,7 @@ public class Percolation {
         openSites = 0;
         sites = new boolean[n][n];
         uf = new WeightedQuickUnionUF(n * n + 2);
+        ufTopSite = new WeightedQuickUnionUF(n * n + 2);
     }
 
     private int xyTo1D(int row, int col) {
@@ -37,6 +39,7 @@ public class Percolation {
         // Connect to virtual sites
         if (row == 1) {
             uf.union(0, xyTo1D(row, col));
+            ufTopSite.union(0, xyTo1D(row, col));
         }
         if (row == n) {
             uf.union(1, xyTo1D(row, col));
@@ -45,21 +48,25 @@ public class Percolation {
         // Connect to top site
         if (row > 1 && sites[row - 1 - 1][col - 1]) {
             uf.union(xyTo1D(row, col), xyTo1D(row - 1, col));
+            ufTopSite.union(xyTo1D(row, col), xyTo1D(row - 1, col));
         }
 
         // Connect to bottom site
         if (row < n && sites[row][col - 1]) {
             uf.union(xyTo1D(row, col), xyTo1D(row + 1, col));
+            ufTopSite.union(xyTo1D(row, col), xyTo1D(row + 1, col));
         }
 
         // Connect to left site
         if (col > 1 && sites[row - 1][col - 1 - 1]) {
             uf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
+            ufTopSite.union(xyTo1D(row, col), xyTo1D(row, col - 1));
         }
 
         // Connect to right site
         if (col < n && sites[row - 1][col]) {
             uf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
+            ufTopSite.union(xyTo1D(row, col), xyTo1D(row, col + 1));
         }
 
         sites[row - 1][col - 1] = true;
@@ -75,7 +82,7 @@ public class Percolation {
     // is site (row, col) full?
     public boolean isFull(int row, int col) {
         validateIndex(row, col);
-        return sites[row - 1][col - 1] && uf.connected(0, xyTo1D(row, col));
+        return sites[row - 1][col - 1] && ufTopSite.connected(0, xyTo1D(row, col));
     }
 
     // number of open sites
