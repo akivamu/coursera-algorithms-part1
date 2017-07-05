@@ -23,7 +23,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void doubleArraySize() {
-        Item[] newArr = (Item[]) new Object[size * 2];
+        Item[] newArr = (Item[]) new Object[size == 0 ? 1 : size * 2];
         int count = 0;
         for (Item item : items) {
             if (item != null) newArr[count++] = item;
@@ -35,7 +35,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public void enqueue(Item item) {
         if (item == null) throw new IllegalArgumentException();
 
-        if (size == items.length) doubleArraySize();
+        if (maxIndex == items.length) doubleArraySize();
 
         items[maxIndex] = item;
         size++;
@@ -78,11 +78,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         RandomizedQueueIterator() {
             data = (Item[]) new Object[size];
-            int count = 0;
-            for (Item item : items) {
-                if (item != null) data[count++] = item;
+            if (size > 0) {
+                int count = 0;
+                for (Item item : items) {
+                    if (item != null) data[count++] = item;
+                }
+                StdRandom.shuffle(data);
             }
-            StdRandom.shuffle(data);
         }
 
         @Override
@@ -108,11 +110,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) {
         RandomizedQueue<Integer> queue = new RandomizedQueue<>();
         queue.enqueue(1);
-        queue.enqueue(2);
+        queue.dequeue();
         queue.enqueue(3);
-        queue.enqueue(4);
-        queue.enqueue(5);
-        queue.enqueue(6);
 
         for (Integer item : queue) {
             System.out.println(item);
