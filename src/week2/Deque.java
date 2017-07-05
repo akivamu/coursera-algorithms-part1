@@ -9,7 +9,7 @@ public class Deque<Item> implements Iterable<Item> {
     private int size = 0;
 
     private class Node {
-        private Item item;
+        private final Item item;
         private Node next;
         private Node prev;
 
