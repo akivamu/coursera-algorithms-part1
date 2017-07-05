@@ -11,8 +11,9 @@ public class Permutation {
             queue.enqueue(StdIn.readString());
         }
 
-        while (k-- > 0) {
+        while (k > 0) {
             System.out.println(queue.dequeue());
+            k--;
         }
     }
 }

@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
+    private Node first;
+    private Node last;
+    private int size = 0;
 
     private class Node {
         public Item item;
@@ -14,10 +17,6 @@ public class Deque<Item> implements Iterable<Item> {
             this.item = item;
         }
     }
-
-    private Node first;
-    private Node last;
-    private int size = 0;
 
     public Deque() {
     }
