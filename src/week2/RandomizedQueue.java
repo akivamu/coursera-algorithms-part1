@@ -32,6 +32,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         maxIndex = size;
     }
 
+    private void halfArraySize() {
+        int newSize = items.length / 2;
+        Item[] newArr = (Item[]) new Object[newSize == 0 ? 1 : newSize];
+        int count = 0;
+        for (Item item : items) {
+            if (item != null) newArr[count++] = item;
+        }
+        items = newArr;
+        maxIndex = size;
+    }
+
     public void enqueue(Item item) {
         if (item == null) throw new IllegalArgumentException();
 
@@ -51,6 +62,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (item != null) {
                 items[index] = null;
                 size--;
+
+                if (size <= items.length / 4) halfArraySize();
+
                 return item;
             }
         }
@@ -110,6 +124,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) {
         RandomizedQueue<Integer> queue = new RandomizedQueue<>();
         queue.enqueue(1);
+        queue.enqueue(1);
+        queue.enqueue(1);
+        queue.enqueue(1);
+        queue.enqueue(1);
+        queue.dequeue();
+        queue.dequeue();
+        queue.dequeue();
+        queue.dequeue();
         queue.dequeue();
         queue.enqueue(3);
 
