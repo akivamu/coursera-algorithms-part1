@@ -1,5 +1,3 @@
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -91,19 +89,5 @@ public class Percolation {
     // does the system percolate?
     public boolean percolates() {
         return uf.connected(0, 1);
-    }
-
-    // test client (optional)
-    public static void main(String[] args) {
-        int n = StdIn.readInt();
-        Percolation percolation = new Percolation(n);
-        while (!StdIn.isEmpty()) {
-            int x = StdIn.readInt();
-            int y = StdIn.readInt();
-            percolation.open(x, y);
-        }
-
-        StdOut.println(percolation.numberOfOpenSites() + " open sites");
-        StdOut.println(percolation.percolates() ? "percolates" : "does not percolate");
     }
 }
