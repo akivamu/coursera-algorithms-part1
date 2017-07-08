@@ -1,0 +1,10 @@
+dependencies {
+    compile project(':common')
+    testCompile 'junit:junit:4+'
+}
+
+task dist(type: Zip) {
+    dependsOn build
+    from 'src/main/java/'
+    archiveName "collinear.zip"
+}
