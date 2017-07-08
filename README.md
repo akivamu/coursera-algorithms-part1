@@ -1,15 +1,13 @@
-# Compile and run
-
+# Test and build all
 ```
-# cd to root of project
+./gradlew build
+```
 
-# set up class path
-export CLASSPATH=`pwd`/libs/algs4.jar
-export ROOTPATH=`pwd`
+# Test and build specific module
+```
+# Test week1's assignment
+./gradlew week1:assignment:test
 
-# compile
-javac ${ROOTPATH}/src/week1/percolation/Percolation.java
-
-cd src
-java -cp "${ROOTPATH}/libs/algs4.jar": week1/percolation/Percolation < ${ROOTPATH}/input/week1/percolation/input2.txt
+# Test week2's assignment
+./gradlew week2:assignment:test
 ```
