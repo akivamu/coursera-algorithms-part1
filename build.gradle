@@ -1,5 +1,11 @@
-apply plugin: 'java'
+allprojects {
+    apply plugin: 'java'
 
-test {
-    testLogging.showStandardStreams = true
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        testLogging.showStandardStreams = true
+    }
 }
