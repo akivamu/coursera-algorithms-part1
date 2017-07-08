@@ -5,10 +5,6 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: '../../libs', include: ['*.jar'])
+    compile project(':common')
     testCompile 'junit:junit:4+'
-}
-
-test {
-    testLogging.showStandardStreams = true
 }

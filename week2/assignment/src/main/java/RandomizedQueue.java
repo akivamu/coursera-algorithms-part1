@@ -1,5 +1,3 @@
-package week2;
-
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -118,25 +116,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         @Override
         public void remove() {
             throw new UnsupportedOperationException();
-        }
-    }
-
-    public static void main(String[] args) {
-        RandomizedQueue<Integer> queue = new RandomizedQueue<>();
-        queue.enqueue(1);
-        queue.enqueue(1);
-        queue.enqueue(1);
-        queue.enqueue(1);
-        queue.enqueue(1);
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.enqueue(3);
-
-        for (Integer item : queue) {
-            System.out.println(item);
         }
     }
 }

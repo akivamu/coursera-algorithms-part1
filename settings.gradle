@@ -1,1 +1,3 @@
+include 'common'
 include 'week1:uf', 'week1:assignment'
+include 'week2:assignment'

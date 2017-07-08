@@ -3,8 +3,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class PercolationTest {
 
@@ -17,19 +15,9 @@ public class PercolationTest {
         testEach("input50.txt", 1412, true);
     }
 
-    private void resyncStdIn() {
-        try {
-            Method m = StdIn.class.getDeclaredMethod("resync");
-            m.setAccessible(true);
-            m.invoke(null);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void testEach(String fileName, int numberOfOpenSites, boolean percolates) throws IOException {
         System.setIn(getClass().getResourceAsStream(fileName));
-        resyncStdIn();
+        Util.resyncStdIn();
 
         int n = StdIn.readInt();
         Percolation percolation = new Percolation(n);
