@@ -1,5 +1,3 @@
-package week1.uf;
-
 /**
  * Implementation of UF problem using Quick Union algorithm (lazy approach).
  * Cons:

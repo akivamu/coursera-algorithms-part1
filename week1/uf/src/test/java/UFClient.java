@@ -1,6 +1,5 @@
-package week1.uf;
-
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UFClient {
-    private static final String INPUT_PATH = "input/week1/uf/";
     private static final boolean VERBOSE = false;
 
     private class TestSpec {
@@ -30,7 +28,7 @@ public class UFClient {
 
         TestSpec(String inputFileName) throws FileNotFoundException {
             System.out.println("Reading input from " + inputFileName);
-            Scanner scanner = new Scanner(new File(INPUT_PATH + inputFileName));
+            Scanner scanner = new Scanner(new File(getClass().getResource(inputFileName).getFile()));
             n = scanner.nextInt();
             operations = new ArrayList<>();
 
@@ -99,6 +97,7 @@ public class UFClient {
         performAllAlgorithms("mediumUF.txt");
     }
 
+    @Ignore
     @Test
     public void testAllLarge() throws FileNotFoundException {
         performAllAlgorithms("largeUF.txt");

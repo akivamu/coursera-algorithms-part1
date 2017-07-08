@@ -1,5 +1,3 @@
-package week1.uf;
-
 /**
  * An abstract class defines operations in Union-Find problem
  */

@@ -1,14 +1,10 @@
-package week1.uf;
-
 /**
- * An improvement for QuickUnion approach: minimize tree height.
- * When union, choose smaller tree (less objects) to attach to another tree root.
+ * Best improvement for QuickUnion approach: combine WeightedQuickUnion and PathCompressionQuickUnion.
  */
-class WeightedQuickUnionUF extends QuickUnionUF {
-
+class WeightedQuickUnionWithPathCompressionUF extends QuickUnionUF {
     private final int[] sizes;
 
-    WeightedQuickUnionUF(int n) {
+    WeightedQuickUnionWithPathCompressionUF(int n) {
         super(n);
 
         sizes = new int[n];
@@ -17,13 +13,18 @@ class WeightedQuickUnionUF extends QuickUnionUF {
         }
     }
 
-    /**
-     * Calculate and Attach smaller tree to larger tree.
-     * findRootIndex's cost become logN
-     *
-     * @param p object in set
-     * @param q object in set
-     */
+    @Override
+    protected int findRootIndex(int p) {
+        int index = ids[p];
+        while (ids[index] != index) {
+            int parent = ids[index];
+            int grandParent = ids[parent];
+            ids[index] = grandParent;
+            index = ids[index];
+        }
+        return index;
+    }
+
     @Override
     void union(int p, int q) {
         int rootPIndex = findRootIndex(p);

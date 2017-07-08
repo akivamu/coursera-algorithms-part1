@@ -1,5 +1,3 @@
-package week1.uf;
-
 /**
  * Implementation of UF problem using Quick Find algorithm (eager approach).
  * Cons:

@@ -1,5 +1,3 @@
-package week1.uf;
-
 /**
  * An improvement for QuickUnion approach: keep tree flat, by making descendants become children of root.
  * While finding root, change current object parent to grandparent.
