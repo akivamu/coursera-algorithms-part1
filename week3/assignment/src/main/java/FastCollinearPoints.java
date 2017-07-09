@@ -55,14 +55,20 @@ public class FastCollinearPoints {
 
                 if (!isEquals(lastSlope, curSlope) || i == otherPoints.length - 1) {
                     if (pointsCount >= 3) {
-                        pointsCount++;
-                        Point[] sameSlopePoints = new Point[pointsCount];
-                        sameSlopePoints[0] = p;
-                        System.arraycopy(otherPoints, firstPointIndex, sameSlopePoints, 1, pointsCount - 1);
-                        Arrays.sort(sameSlopePoints);
+                        boolean saveSegment = true;
+                        Point lastPoint = null;
+                        for (int k = firstPointIndex; k < firstPointIndex + pointsCount; k++) {
+                            if (otherPoints[k].compareTo(p) < 0) {
+                                saveSegment = false;
+                                break;
+                            }
+                            if (lastPoint == null || otherPoints[k].compareTo(lastPoint) > 0) {
+                                lastPoint = otherPoints[k];
+                            }
+                        }
 
-                        if (p.compareTo(sameSlopePoints[0]) == 0) {
-                            lineSegments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[pointsCount - 1]));
+                        if (saveSegment) {
+                            lineSegments.add(new LineSegment(p, lastPoint));
                         }
                     }
                     lastSlope = curSlope;
