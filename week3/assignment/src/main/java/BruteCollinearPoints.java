@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BruteCollinearPoints {
     private final Point[] points;
@@ -8,7 +10,7 @@ public class BruteCollinearPoints {
     public BruteCollinearPoints(Point[] points) {
         if (points == null) throw new IllegalArgumentException();
 
-        Set<Point> nonRepeatedPoints = new HashSet<>();
+        List<Point> nonRepeatedPoints = new ArrayList<>();
         for (Point point : points) {
             if (point == null) throw new IllegalArgumentException();
 
@@ -38,15 +40,15 @@ public class BruteCollinearPoints {
                     }
 
                     // 4th point
-                    for (int l = 0; l < points.length && l != k && l != i && l != j; l++) {
-                        if (isEquals(points[i].slopeTo(points[k]), points[i].slopeTo(points[l]))) {
+                    for (int m = 0; m < points.length && m != k && m != i && m != j; m++) {
+                        if (isEquals(points[i].slopeTo(points[k]), points[i].slopeTo(points[m]))) {
 
                             // Find endpoints
                             Point[] sameSlopePoints = new Point[4];
                             sameSlopePoints[0] = points[i];
                             sameSlopePoints[1] = points[j];
                             sameSlopePoints[2] = points[k];
-                            sameSlopePoints[3] = points[l];
+                            sameSlopePoints[3] = points[m];
                             Arrays.sort(sameSlopePoints);
 
                             lineSegments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[3]));

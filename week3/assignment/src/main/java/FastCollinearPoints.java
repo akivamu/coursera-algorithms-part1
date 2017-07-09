@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FastCollinearPoints {
     private final Point[] points;
@@ -7,7 +9,7 @@ public class FastCollinearPoints {
     public FastCollinearPoints(Point[] points) {
         if (points == null) throw new IllegalArgumentException();
 
-        Set<Point> nonRepeatedPoints = new HashSet<>();
+        List<Point> nonRepeatedPoints = new ArrayList<>();
         for (Point point : points) {
             if (point == null) throw new IllegalArgumentException();
 
