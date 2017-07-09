@@ -26,7 +26,7 @@ public class FastCollinearPoints {
     }
 
     private boolean isEquals(double a, double b) {
-        return (Math.abs(a - b) < 0.000001);
+        return a == b;
     }
 
     private void scan() {

@@ -75,6 +75,13 @@ public class FastCollinearPointsTest {
                 "(3000, 4000) -> (20000, 21000)",
                 "(10000, 0) -> (0, 10000)",
         });
+
+        testFile("input40.txt", new String[]{
+                "(2000, 24000) -> (25000, 24000)",
+                "(1000, 17000) -> (29000, 17000)",
+                "(2000, 29000) -> (28000, 29000)",
+                "(1000, 17000) -> (1000, 31000)",
+        });
     }
 
     private void testFile(String fileName, String[] output) {
@@ -88,18 +95,19 @@ public class FastCollinearPointsTest {
             points[i] = new Point(x, y);
         }
 
+        List<String> result = Arrays.asList(output);
+
         // Brute
         BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
         Assert.assertEquals(output.length, bruteCollinearPoints.numberOfSegments());
+        for (int i = 0; i < output.length; i++) {
+            Assert.assertTrue(result.contains(bruteCollinearPoints.segments()[i].toString()));
+        }
 
         // Fast
         FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
         Assert.assertEquals(output.length, fastCollinearPoints.numberOfSegments());
-
-        // Check result
-        List<String> result = Arrays.asList(output);
         for (int i = 0; i < output.length; i++) {
-            Assert.assertTrue(result.contains(bruteCollinearPoints.segments()[i].toString()));
             Assert.assertTrue(result.contains(fastCollinearPoints.segments()[i].toString()));
         }
     }
