@@ -71,20 +71,24 @@ public class FastCollinearPointsTest {
 
     @Test
     public void testAllInputFile() {
-        testFile("input8.txt", new String[]{
+        testFile(true, "input8.txt", new String[]{
                 "(3000, 4000) -> (20000, 21000)",
                 "(10000, 0) -> (0, 10000)",
         });
 
-        testFile("input40.txt", new String[]{
+        testFile(true, "input40.txt", new String[]{
                 "(2000, 24000) -> (25000, 24000)",
                 "(1000, 17000) -> (29000, 17000)",
                 "(2000, 29000) -> (28000, 29000)",
                 "(1000, 17000) -> (1000, 31000)",
         });
+
+        testFile(false, "input6.txt", new String[]{
+                "(14000, 10000) -> (32000, 10000)",
+        });
     }
 
-    private void testFile(String fileName, String[] output) {
+    private void testFile(boolean both, String fileName, String[] output) {
         // Read input file
         In in = new In(fileName);
         int n = in.readInt();
@@ -97,11 +101,13 @@ public class FastCollinearPointsTest {
 
         List<String> result = Arrays.asList(output);
 
-        // Brute
-        BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
-        Assert.assertEquals(output.length, bruteCollinearPoints.numberOfSegments());
-        for (int i = 0; i < output.length; i++) {
-            Assert.assertTrue(result.contains(bruteCollinearPoints.segments()[i].toString()));
+        if (both) {
+            // Brute
+            BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
+            Assert.assertEquals(output.length, bruteCollinearPoints.numberOfSegments());
+            for (int i = 0; i < output.length; i++) {
+                Assert.assertTrue(result.contains(bruteCollinearPoints.segments()[i].toString()));
+            }
         }
 
         // Fast

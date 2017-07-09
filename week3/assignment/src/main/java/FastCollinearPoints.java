@@ -29,27 +29,43 @@ public class FastCollinearPoints {
         return a == b;
     }
 
+    private Point[] getSortedPointsBySlopeOrder(Point originPoint) {
+        List<Point> others = new ArrayList<>(Arrays.asList(points));
+        others.remove(originPoint);
+        Point[] otherPoints = others.toArray(new Point[0]);
+        Arrays.sort(otherPoints, originPoint.slopeOrder());
+        return otherPoints;
+    }
+
     private void scan() {
         for (Point p : points) {
-            List<Point> others = new ArrayList<>(Arrays.asList(points));
-            others.remove(p);
-            Point[] otherPoints = others.toArray(new Point[0]);
-            Arrays.sort(otherPoints, p.slopeOrder());
+            Point[] otherPoints = getSortedPointsBySlopeOrder(p);
 
-            for (int i = 0; i < otherPoints.length - 2; i++) {
-                if (isEquals(p.slopeTo(otherPoints[i]), p.slopeTo(otherPoints[i + 1]))
-                        && isEquals(p.slopeTo(otherPoints[i]), p.slopeTo(otherPoints[i + 2]))) {
-                    // Find endpoints
-                    Point[] sameSlopePoints = new Point[4];
-                    sameSlopePoints[0] = p;
-                    sameSlopePoints[1] = otherPoints[i];
-                    sameSlopePoints[2] = otherPoints[i + 1];
-                    sameSlopePoints[3] = otherPoints[i + 2];
-                    Arrays.sort(sameSlopePoints);
+            double lastSlope = p.slopeTo(otherPoints[0]);
+            int firstPointIndex = 0;
+            int pointsCount = 1;
+            for (int i = 1; i < otherPoints.length; i++) {
+                double curSlope = p.slopeTo(otherPoints[i]);
 
-                    if (p.compareTo(sameSlopePoints[0]) == 0) {
-                        lineSegments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[3]));
+                if (isEquals(lastSlope, curSlope)) {
+                    pointsCount++;
+                }
+
+                if (!isEquals(lastSlope, curSlope) || i == otherPoints.length - 1) {
+                    if (pointsCount >= 3) {
+                        pointsCount++;
+                        Point[] sameSlopePoints = new Point[pointsCount];
+                        sameSlopePoints[0] = p;
+                        System.arraycopy(otherPoints, firstPointIndex, sameSlopePoints, 1, pointsCount - 1);
+                        Arrays.sort(sameSlopePoints);
+
+                        if (p.compareTo(sameSlopePoints[0]) == 0) {
+                            lineSegments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[pointsCount - 1]));
+                        }
                     }
+                    lastSlope = curSlope;
+                    firstPointIndex = i;
+                    pointsCount = 1;
                 }
             }
         }
