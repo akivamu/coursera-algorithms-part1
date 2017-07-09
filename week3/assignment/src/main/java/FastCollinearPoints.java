@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class FastCollinearPoints {
-    private Point[] points;
-    private LineSegment[] lineSegments;
+    private final Point[] points;
+    private final List<LineSegment> lineSegments = new ArrayList<>();
 
     public FastCollinearPoints(Point[] points) {
         if (points == null) throw new IllegalArgumentException();
@@ -23,9 +23,11 @@ public class FastCollinearPoints {
         scan();
     }
 
-    private void scan() {
-        List<LineSegment> segments = new ArrayList<>();
+    private boolean isEquals(double a, double b) {
+        return (Math.abs(a - b) < 0.000001);
+    }
 
+    private void scan() {
         for (Point p : points) {
             List<Point> others = new ArrayList<>(Arrays.asList(points));
             others.remove(p);
@@ -33,8 +35,8 @@ public class FastCollinearPoints {
             Arrays.sort(otherPoints, p.slopeOrder());
 
             for (int i = 0; i < otherPoints.length - 2; i++) {
-                if (p.slopeTo(otherPoints[i]) == p.slopeTo(otherPoints[i + 1])
-                        && p.slopeTo(otherPoints[i]) == p.slopeTo(otherPoints[i + 2])) {
+                if (isEquals(p.slopeTo(otherPoints[i]), p.slopeTo(otherPoints[i + 1]))
+                        && isEquals(p.slopeTo(otherPoints[i]), p.slopeTo(otherPoints[i + 2]))) {
                     // Find endpoints
                     Point[] sameSlopePoints = new Point[4];
                     sameSlopePoints[0] = p;
@@ -44,19 +46,20 @@ public class FastCollinearPoints {
                     Arrays.sort(sameSlopePoints);
 
                     if (p.compareTo(sameSlopePoints[0]) == 0) {
-                        segments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[3]));
+                        lineSegments.add(new LineSegment(sameSlopePoints[0], sameSlopePoints[3]));
                     }
                 }
             }
         }
-        lineSegments = segments.toArray(new LineSegment[0]);
     }
 
+    // the number of line segments
     public int numberOfSegments() {
-        return lineSegments.length;
+        return lineSegments.size();
     }
 
+    // the line segments
     public LineSegment[] segments() {
-        return lineSegments;
+        return lineSegments.toArray(new LineSegment[0]);
     }
 }
