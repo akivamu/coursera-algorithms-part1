@@ -6,5 +6,8 @@ dependencies {
 task dist(type: Zip) {
     dependsOn build
     from 'src/main/java/'
+    include 'BruteCollinearPoints.java'
+    include 'FastCollinearPoints.java'
+    include 'Point.java'
     archiveName "collinear.zip"
 }

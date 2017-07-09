@@ -1,5 +1,9 @@
+import edu.princeton.cs.algs4.In;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class FastCollinearPointsTest {
 
@@ -63,5 +67,40 @@ public class FastCollinearPointsTest {
         Assert.assertEquals(1, lineSegments.length);
 
         Assert.assertEquals("(1, 1) -> (4, 4)", lineSegments[0].toString());
+    }
+
+    @Test
+    public void testAllInputFile() {
+        testFile("input8.txt", new String[]{
+                "(3000, 4000) -> (20000, 21000)",
+                "(10000, 0) -> (0, 10000)",
+        });
+    }
+
+    private void testFile(String fileName, String[] output) {
+        // Read input file
+        In in = new In(fileName);
+        int n = in.readInt();
+        Point[] points = new Point[n];
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
+        }
+
+        // Brute
+        BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
+        Assert.assertEquals(output.length, bruteCollinearPoints.numberOfSegments());
+
+        // Fast
+        FastCollinearPoints fastCollinearPoints = new FastCollinearPoints(points);
+        Assert.assertEquals(output.length, fastCollinearPoints.numberOfSegments());
+
+        // Check result
+        List<String> result = Arrays.asList(output);
+        for (int i = 0; i < output.length; i++) {
+            Assert.assertTrue(result.contains(bruteCollinearPoints.segments()[i].toString()));
+            Assert.assertTrue(result.contains(fastCollinearPoints.segments()[i].toString()));
+        }
     }
 }

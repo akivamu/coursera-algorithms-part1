@@ -31,7 +31,7 @@ public class BruteCollinearPoints {
                 for (int k = 0; k < points.length && k != i && k != j; k++) {
                     // Stop if first 3 points NOT in the same line
                     if (points[i].slopeTo(points[j]) != points[i].slopeTo(points[k])) {
-                        break;
+                        continue;
                     }
 
                     // 4th point
