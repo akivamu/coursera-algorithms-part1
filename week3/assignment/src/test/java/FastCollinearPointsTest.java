@@ -71,6 +71,8 @@ public class FastCollinearPointsTest {
 
     @Test
     public void testAllInputFile() {
+        testFile(true, "input1.txt", new String[]{});
+
         testFile(true, "input8.txt", new String[]{
                 "(3000, 4000) -> (20000, 21000)",
                 "(10000, 0) -> (0, 10000)",

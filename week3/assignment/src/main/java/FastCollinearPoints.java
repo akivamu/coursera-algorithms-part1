@@ -38,6 +38,8 @@ public class FastCollinearPoints {
     }
 
     private void scan() {
+        if (points.length < 4) return;
+
         for (Point p : points) {
             Point[] otherPoints = getSortedPointsBySlopeOrder(p);
 
