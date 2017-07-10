@@ -4,10 +4,7 @@ import org.junit.Test;
 import java.util.NoSuchElementException;
 
 public class StackTest {
-    @Test
-    public void testStackLinkedList() {
-        Stack<Integer> stack = new StackLinkedList<>();
-
+    private void runStack(Stack<Integer> stack) {
         Assert.assertTrue(stack.isEmpty());
         Assert.assertEquals(0, stack.size());
 
@@ -41,5 +38,15 @@ public class StackTest {
 
         Assert.assertTrue(stack.isEmpty());
         Assert.assertEquals(0, stack.size());
+    }
+
+    @Test
+    public void testStackLinkedList() {
+        runStack(new StackLinkedList<>());
+    }
+
+    @Test
+    public void testStackArray() {
+        runStack(new StackArray<>());
     }
 }
