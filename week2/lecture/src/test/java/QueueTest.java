@@ -24,14 +24,18 @@ public class QueueTest {
 
         queue.enqueue(3);
         queue.enqueue(4);
+        queue.enqueue(5);
+        queue.enqueue(6);
         Assert.assertFalse(queue.isEmpty());
-        Assert.assertEquals(4, queue.size());
+        Assert.assertEquals(6, queue.size());
 
         Object item = queue.dequeue();
         Assert.assertTrue(item instanceof Integer);
         Assert.assertTrue((Integer) item == 1);
-        Assert.assertEquals(3, queue.size());
+        Assert.assertEquals(5, queue.size());
 
+        queue.dequeue();
+        queue.dequeue();
         queue.dequeue();
         queue.dequeue();
         queue.dequeue();
@@ -43,6 +47,11 @@ public class QueueTest {
     @Test
     public void testQueueLinkedList() {
         runQueue(new QueueLinkedList<>());
+    }
+
+    @Test
+    public void testQueueArray() {
+        runQueue(new QueueArray<>());
     }
 
 }
