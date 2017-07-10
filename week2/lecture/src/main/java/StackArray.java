@@ -1,9 +1,16 @@
 import java.util.NoSuchElementException;
 
 public class StackArray<Item> implements Stack<Item> {
+
+    /**
+     * Space cost: (pointer size) * 2*N
+     */
     private Item[] data = (Item[]) new Object[1];
     private int n = 0;
 
+    /**
+     * Time cost: amortized constant
+     */
     @Override
     public void push(Item item) throws IllegalArgumentException {
         if (item == null) throw new IllegalArgumentException();
@@ -16,6 +23,9 @@ public class StackArray<Item> implements Stack<Item> {
         n++;
     }
 
+    /**
+     * Time cost: amortized constant
+     */
     @Override
     public Item pop() throws NoSuchElementException {
         if (n == 0) throw new NoSuchElementException();
@@ -41,6 +51,9 @@ public class StackArray<Item> implements Stack<Item> {
         return n == 0;
     }
 
+    /**
+     * Time cost: N
+     */
     private void resize(int newSize) {
         Item[] newArray = (Item[]) new Object[newSize > 1 ? newSize : 1];
         for (int i = 0; i < n; i++) {

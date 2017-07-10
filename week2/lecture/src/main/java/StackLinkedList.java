@@ -2,9 +2,15 @@ import java.util.NoSuchElementException;
 
 public class StackLinkedList<Item> implements Stack<Item> {
 
+    /**
+     * Space cost: (Inner class Node overhead) * N
+     */
     private Node head;
     private int size;
 
+    /**
+     * Time cost: constant
+     */
     @Override
     public void push(Item item) throws IllegalArgumentException {
         if (item == null) throw new IllegalArgumentException();
@@ -15,6 +21,9 @@ public class StackLinkedList<Item> implements Stack<Item> {
         size++;
     }
 
+    /**
+     * Time cost: constant
+     */
     @Override
     public Item pop() throws NoSuchElementException {
         if (head == null) throw new NoSuchElementException();
