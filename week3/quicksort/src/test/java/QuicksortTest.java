@@ -3,17 +3,21 @@ import org.junit.Test;
 
 public class QuicksortTest {
 
-    private int[] generateRandomArray(int n) {
+    private Integer[] generateRandomArray(int n) {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) arr[i] = i;
 
         Util.shuffle(arr);
-        return arr;
+
+        Integer[] ret = new Integer[arr.length];
+        for (int i = 0; i < n; i++) ret[i] = arr[i];
+
+        return ret;
     }
 
     @Test
     public void test1() {
-        int[] arr = new int[]{0, 1, 4, 2, 3};
+        Integer[] arr = new Integer[]{0, 1, 4, 2, 3};
 
         Quick.sort(arr);
 
@@ -30,7 +34,7 @@ public class QuicksortTest {
     }
 
     private void runRandom(int n) {
-        int[] arr = generateRandomArray(n);
+        Integer[] arr = generateRandomArray(n);
         for (int val : arr) {
             System.out.print(val + " ");
         }
