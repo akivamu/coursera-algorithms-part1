@@ -7,6 +7,7 @@ public class SortTest {
         simpleTest(new SelectionSort());
         simpleTest(new InsertionSort());
         simpleTest(new BubbleSort());
+        simpleTest(new ShellSort());
     }
 
     @Test
@@ -15,7 +16,7 @@ public class SortTest {
 
         for (int i = 0; i < trials; i++) runTestForThis(new SelectionSort(), 10);
         for (int i = 0; i < trials; i++) runTestForThis(new InsertionSort(), 10);
-        for (int i = 0; i < trials; i++) runTestForThis(new BubbleSort(), 10);
+        for (int i = 0; i < trials; i++) runTestForThis(new ShellSort(), 10);
     }
 
     private void simpleTest(Sort sort) {
