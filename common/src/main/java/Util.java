@@ -30,4 +30,32 @@ public class Util {
             }
         }
     }
+
+    public static Integer[] generateRandomIntegerArray(int n) {
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) arr[i] = i;
+
+        Util.shuffle(arr);
+
+        Integer[] ret = new Integer[arr.length];
+        for (int i = 0; i < n; i++) ret[i] = arr[i];
+
+        return ret;
+    }
+
+    public static boolean less(Comparable v, Comparable w) {
+        return v.compareTo(w) < 0;
+    }
+
+    public static void exch(Comparable[] a, int i, int j) {
+        Comparable swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
+
+    public static boolean isSorted(Comparable[] a) {
+        for (int i = 1; i < a.length; i++)
+            if (less(a[i], a[i - 1])) return false;
+        return true;
+    }
 }
