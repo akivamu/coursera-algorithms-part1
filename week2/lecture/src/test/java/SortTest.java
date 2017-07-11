@@ -5,6 +5,7 @@ public class SortTest {
     @Test
     public void testSimple() {
         simpleTest(new SelectionSort());
+        simpleTest(new InsertionSort());
     }
 
     @Test
@@ -12,6 +13,7 @@ public class SortTest {
         final int trials = 2000;
 
         for (int i = 0; i < trials; i++) runTestForThis(new SelectionSort(), 10);
+        for (int i = 0; i < trials; i++) runTestForThis(new InsertionSort(), 10);
     }
 
     private void simpleTest(Sort sort) {
