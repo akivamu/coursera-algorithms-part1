@@ -32,6 +32,10 @@ public class SortTest {
         arr = new Integer[]{1, 1, 1, 1, 1};
         sort.sort(arr);
         Assert.assertTrue(Util.isSorted(arr));
+
+        arr = new Integer[]{3, 4, 2, 1, 3};
+        sort.sort(arr);
+        Assert.assertTrue(Util.isSorted(arr));
     }
 
     private void runTestForThis(Sort sort, int n) {

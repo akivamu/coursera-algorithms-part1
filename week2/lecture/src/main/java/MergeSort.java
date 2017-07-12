@@ -72,15 +72,10 @@ public class MergeSort implements Sort {
         int leftIndex = startIndex;
         int rightIndex = midIndex + 1;
         for (int i = startIndex; i <= endIndex; i++) {
-            if (rightIndex > endIndex
-                    || leftIndex < midIndex + 1 && Util.less(tmpArray[leftIndex], tmpArray[rightIndex])) {
-                array[i] = tmpArray[leftIndex];
-                leftIndex++;
-            } else if (leftIndex > midIndex
-                    || rightIndex <= endIndex && Util.less(tmpArray[rightIndex], tmpArray[leftIndex])) {
-                array[i] = tmpArray[rightIndex];
-                rightIndex++;
-            }
+            if (leftIndex > midIndex) array[i] = tmpArray[rightIndex++];
+            else if (rightIndex > endIndex) array[i] = tmpArray[leftIndex++];
+            else if (Util.less(tmpArray[leftIndex], tmpArray[rightIndex])) array[i] = tmpArray[leftIndex++];
+            else array[i] = tmpArray[rightIndex++];
         }
 
         // Note: The tmpArray can be GC now, then last recursive call clone new array and so on...
@@ -104,15 +99,10 @@ public class MergeSort implements Sort {
         int leftIndex = startIndex;
         int rightIndex = midIndex + 1;
         for (int i = startIndex; i <= endIndex; i++) {
-            if (rightIndex > endIndex
-                    || leftIndex < midIndex + 1 && Util.less(tmpArray[leftIndex], tmpArray[rightIndex])) {
-                array[i] = tmpArray[leftIndex];
-                leftIndex++;
-            } else if (leftIndex > midIndex
-                    || rightIndex <= endIndex && Util.less(tmpArray[rightIndex], tmpArray[leftIndex])) {
-                array[i] = tmpArray[rightIndex];
-                rightIndex++;
-            }
+            if (leftIndex > midIndex) array[i] = tmpArray[rightIndex++];
+            else if (rightIndex > endIndex) array[i] = tmpArray[leftIndex++];
+            else if (Util.less(tmpArray[leftIndex], tmpArray[rightIndex])) array[i] = tmpArray[leftIndex++];
+            else array[i] = tmpArray[rightIndex++];
         }
     }
 }
