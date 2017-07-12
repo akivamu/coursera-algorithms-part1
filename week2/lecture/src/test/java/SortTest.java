@@ -9,6 +9,7 @@ public class SortTest {
         simpleTest(new BubbleSort());
         simpleTest(new ShellSort());
         simpleTest(new MergeSort());
+        simpleTest(new BottomUpMergeSort());
     }
 
     @Test
@@ -19,6 +20,7 @@ public class SortTest {
         for (int i = 0; i < trials; i++) runTestForThis(new InsertionSort(), 10);
         for (int i = 0; i < trials; i++) runTestForThis(new ShellSort(), 10);
         for (int i = 0; i < trials; i++) runTestForThis(new MergeSort(), 10);
+        for (int i = 0; i < trials; i++) runTestForThis(new BottomUpMergeSort(), 10);
     }
 
     private void simpleTest(Sort sort) {
