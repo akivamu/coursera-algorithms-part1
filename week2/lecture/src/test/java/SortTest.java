@@ -22,7 +22,7 @@ public class SortTest {
     }
 
     private void simpleTest(Sort sort) {
-        Integer[] arr = new Integer[]{0, 1, 4, 2, 3};
+        Integer[] arr = new Integer[]{1, 0, 4, 2, 3};
 
         sort.sort(arr);
 
