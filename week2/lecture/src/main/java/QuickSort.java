@@ -3,6 +3,23 @@ public class QuickSort implements Sort {
         sortPartition(input, 0, input.length - 1);
     }
 
+    public Comparable findKthSmallestItem(Comparable[] input, int k) {
+        int startIndex = 0;
+        int endIndex = input.length - 1;
+
+        while (true) {
+            int pivotIndex = makePartition(input, startIndex, endIndex);
+
+            if (pivotIndex > k) {
+                endIndex = pivotIndex - 1;
+            } else if (pivotIndex < k) {
+                startIndex = pivotIndex + 1;
+            } else {
+                return input[pivotIndex];
+            }
+        }
+    }
+
     /**
      * Find the final position to place element at `startIndex`. This position is called pivot.
      * This pivot divide array into left and right partitions.
@@ -15,10 +32,10 @@ public class QuickSort implements Sort {
         int j = endIndex;
 
         while (true) {
-            while (Util.less(array[i], array[pivotIndex]) && i < endIndex) {
+            while (i < endIndex && Util.less(array[i], array[pivotIndex])) {
                 i++;
             }
-            while (Util.less(array[pivotIndex], array[j]) && j > startIndex) {
+            while (j > startIndex && Util.less(array[pivotIndex], array[j])) {
                 j--;
             }
 
