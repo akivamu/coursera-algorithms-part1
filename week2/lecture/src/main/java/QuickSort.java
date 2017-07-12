@@ -28,15 +28,16 @@ public class QuickSort implements Sort {
      */
     private static int makePartition(Comparable[] array, int startIndex, int endIndex) {
         int pivotIndex = startIndex;
-        int i = startIndex + 1;
-        int j = endIndex;
+        int i = startIndex;
+        int j = endIndex + 1;
 
         while (true) {
-            while (i < endIndex && Util.less(array[i], array[pivotIndex])) {
-                i++;
+            while (++i < endIndex) {
+                if (!Util.less(array[i], array[pivotIndex])) break;
             }
-            while (j > startIndex && Util.less(array[pivotIndex], array[j])) {
-                j--;
+
+            while (--j > startIndex) {
+                if (!Util.less(array[pivotIndex], array[j])) break;
             }
 
             if (i >= j) break;

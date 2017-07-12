@@ -4,10 +4,9 @@ import org.junit.Test;
 public class QuickSelectTest {
     @Test
     public void testSimple() {
-        Integer[] arr = new Integer[]{7, 4, 2, 1, 9, 5, 0, 3, 8, 6};
-
         QuickSort quickSort = new QuickSort();
-        Assert.assertTrue(9 == (Integer) quickSort.findKthSmallestItem(arr, 9));
+        Assert.assertTrue(9 == (Integer) quickSort.findKthSmallestItem(new Integer[]{7, 4, 2, 1, 9, 5, 0, 3, 8, 6}, 9));
+        Assert.assertTrue(1 == (Integer) quickSort.findKthSmallestItem(new Integer[]{1, 1, 1, 1}, 3));
     }
 
     @Test
