@@ -1,11 +1,17 @@
 import java.util.NoSuchElementException;
 
-public interface PQ<Item> {
-    public void insert(Item item);
+public abstract class PQ<Item extends Comparable<Item>> {
+    protected int size = 0;
 
-    public Item del() throws NoSuchElementException;
+    public abstract void insert(Item item);
 
-    public boolean isEmpty();
+    public abstract Item del() throws NoSuchElementException;
 
-    public int size();
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int size() {
+        return size;
+    }
 }

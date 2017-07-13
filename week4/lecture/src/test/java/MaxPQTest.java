@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class MaxPQTest {
     @Test
-    public void testSimple() {
+    public void testSimpleUnorderedMaxPQ() {
         PQ<Integer> maxPQ = new UnorderedMaxPQ<>();
         int M = 2;
 
@@ -26,14 +26,16 @@ public class MaxPQTest {
 
     @Test
     public void testRandom() {
-        randomStreamAndSmallestMItems(10);
-        randomStreamAndSmallestMItems(20);
-        randomStreamAndSmallestMItems(30);
+        randomStreamAndSmallestMItems(new UnorderedMaxPQ<>(), 10);
+        randomStreamAndSmallestMItems(new UnorderedMaxPQ<>(), 20);
+        randomStreamAndSmallestMItems(new UnorderedMaxPQ<>(), 30);
+
+        randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 10);
+        randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 20);
+        randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 30);
     }
 
-    private void randomStreamAndSmallestMItems(int M) {
-        PQ<Integer> maxPQ = new UnorderedMaxPQ<>();
-
+    private void randomStreamAndSmallestMItems(PQ<Integer> maxPQ, int M) {
         // Make random stream, length = 2M
         Integer[] stream = Util.generateRandomIntegerArray(2 * M);
         Util.printArray(stream);
