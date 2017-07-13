@@ -11,6 +11,7 @@ public class SortTest {
         simpleTest(new MergeSort());
         simpleTest(new BottomUpMergeSort());
         simpleTest(new QuickSort());
+        simpleTest(new HeapSort());
     }
 
     @Test
@@ -22,6 +23,7 @@ public class SortTest {
         for (int i = 0; i < trials; i++) runTestForThis(new ShellSort(), 10);
         for (int i = 0; i < trials; i++) runTestForThis(new MergeSort(), 10);
         for (int i = 0; i < trials; i++) runTestForThis(new QuickSort(), 10);
+        for (int i = 0; i < trials; i++) runTestForThis(new HeapSort(), 10);
     }
 
     private void simpleTest(Sort sort) {
