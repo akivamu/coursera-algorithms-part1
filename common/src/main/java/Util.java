@@ -58,4 +58,17 @@ public class Util {
             if (less(a[i], a[i - 1])) return false;
         return true;
     }
+
+    public static void printArray(Object[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static <Item extends Comparable<Item>> Item[] resizeArray(Item[] array, int newSize) {
+        Item[] newArray = (Item[]) new Comparable[newSize];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
+    }
 }
