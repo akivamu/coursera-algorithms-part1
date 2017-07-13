@@ -33,6 +33,10 @@ public class MaxPQTest {
         randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 10);
         randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 20);
         randomStreamAndSmallestMItems(new OrderedMaxPQ<>(), 30);
+
+        randomStreamAndSmallestMItems(new BinaryHeapMaxPQ<>(), 10);
+        randomStreamAndSmallestMItems(new BinaryHeapMaxPQ<>(), 20);
+        randomStreamAndSmallestMItems(new BinaryHeapMaxPQ<>(), 30);
     }
 
     private void randomStreamAndSmallestMItems(PQ<Integer> maxPQ, int M) {
