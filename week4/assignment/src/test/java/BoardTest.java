@@ -14,6 +14,7 @@ public class BoardTest {
 
         Assert.assertEquals(3, board.dimension());
         Assert.assertEquals(0, board.hamming());
+        Assert.assertEquals(0, board.manhattan());
         Assert.assertTrue(board.isGoal());
         System.out.println(board);
 
@@ -27,6 +28,7 @@ public class BoardTest {
 
         Assert.assertEquals(4, board.dimension());
         Assert.assertEquals(0, board.hamming());
+        Assert.assertEquals(0, board.manhattan());
         Assert.assertTrue(board.isGoal());
         System.out.println(board);
     }
@@ -41,6 +43,7 @@ public class BoardTest {
         });
 
         Assert.assertEquals(1, board.hamming());
+        Assert.assertEquals(1, board.manhattan());
         Assert.assertFalse(board.isGoal());
         System.out.println(board);
 
@@ -52,6 +55,7 @@ public class BoardTest {
         });
 
         Assert.assertEquals(7, board.hamming());
+        Assert.assertEquals(13, board.manhattan());
         Assert.assertFalse(board.isGoal());
         System.out.println(board);
 
@@ -63,6 +67,7 @@ public class BoardTest {
         });
 
         Assert.assertEquals(5, board.hamming());
+        Assert.assertEquals(10, board.manhattan());
         Assert.assertFalse(board.isGoal());
         System.out.println(board);
     }

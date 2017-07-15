@@ -12,17 +12,37 @@ public class Board {
     public int hamming() {
         int count = 0;
         for (int i = 0; i < dimension() * dimension() - 1; i++) {
-            int col = i % dimension();
-            int row = i / dimension();
-            if (blocks[row][col] != i + 1) count++;
+            int[] correctRowCol = convert1DTo2D(i);
+            if (blocks[correctRowCol[0]][correctRowCol[1]] != i + 1) count++;
         }
 
         return count;
     }
 
     public int manhattan() {
-        // TODO
-        return 0;
+        int count = 0;
+        for (int row = 0; row < dimension(); row++) {
+            for (int col = 0; col < dimension(); col++) {
+                if (blocks[row][col] == 0) continue;
+                int[] correctRowCol = convert1DTo2D(blocks[row][col] - 1);
+
+                count += Math.abs(row - correctRowCol[0]);
+                count += Math.abs(col - correctRowCol[1]);
+            }
+        }
+        return count;
+    }
+
+    private int[] convert1DTo2D(int index) {
+        int[] rowCol = new int[2];
+
+        rowCol[0] = index / dimension();
+        rowCol[1] = index % dimension();
+        return rowCol;
+    }
+
+    private int convert2DTo1D(int row, int col) {
+        return row * dimension() + col;
     }
 
     public boolean isGoal() {
