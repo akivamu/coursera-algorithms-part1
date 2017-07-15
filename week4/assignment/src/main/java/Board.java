@@ -5,7 +5,7 @@ public class Board {
     private final int[][] blocks;
 
     public Board(int[][] blocks) {
-        this.blocks = blocks;
+        this.blocks = cloneMatrix(blocks);
     }
 
     public int dimension() {
@@ -42,10 +42,6 @@ public class Board {
         rowCol[0] = index / dimension();
         rowCol[1] = index % dimension();
         return rowCol;
-    }
-
-    private int convert2DTo1D(int row, int col) {
-        return row * dimension() + col;
     }
 
     public boolean isGoal() {
