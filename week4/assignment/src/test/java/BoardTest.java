@@ -72,5 +72,38 @@ public class BoardTest {
         System.out.println(board);
     }
 
+    @Test
+    public void testCompareBoard() {
+        Board board1 = new Board(new int[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 0, 8}
+        });
+
+        Board board2 = new Board(new int[][]{
+                {3, 2, 1},
+                {7, 8, 5},
+                {6, 0, 4}
+        });
+
+        Board board3 = new Board(new int[][]{
+                {8, 1, 3},
+                {4, 0, 2},
+                {7, 6, 5}
+        });
+
+        Board board4 = new Board(new int[][]{
+                {8, 1, 3},
+                {4, 0, 2},
+                {7, 6, 5}
+        });
+
+        Assert.assertTrue(board1.equals(board1));
+        Assert.assertFalse(board1.equals(null));
+        Assert.assertFalse(board1.equals(board2));
+        Assert.assertFalse(board1.equals(board3));
+        Assert.assertFalse(board2.equals(board3));
+        Assert.assertTrue(board3.equals(board4));
+    }
 
 }

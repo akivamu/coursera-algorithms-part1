@@ -55,8 +55,19 @@ public class Board {
     }
 
     public boolean equals(Object y) {
-        // TODO
-        return false;
+        if (y == this) return true;
+        if (y == null) return false;
+        if (y.getClass() != this.getClass()) return false;
+        Board that = (Board) y;
+
+        if (that.dimension() != this.dimension()) return false;
+
+        for (int row = 0; row < dimension(); row++) {
+            for (int col = 0; col < dimension(); col++) {
+                if (that.blocks[row][col] != this.blocks[row][col]) return false;
+            }
+        }
+        return true;
     }
 
     public Iterable<Board> neighbors() {
