@@ -5,8 +5,8 @@ import edu.princeton.cs.algs4.StdOut;
 
 
 public class Solver {
-    private MinPQ<Node> pq = new MinPQ<>();
-    private Node finalNode = null;
+    private final MinPQ<Node> pq = new MinPQ<>();
+    private final Node finalNode;
 
     public static void main(String[] args) {
 
@@ -40,7 +40,7 @@ public class Solver {
 
             if (node.board.isGoal()) {
                 finalNode = node;
-                break;
+                return;
             }
 
             for (Board neighbor : node.board.neighbors()) {
@@ -49,6 +49,8 @@ public class Solver {
                 pq.insert(newNode);
             }
         }
+
+        this.finalNode = null;
     }
 
     public boolean isSolvable() {
