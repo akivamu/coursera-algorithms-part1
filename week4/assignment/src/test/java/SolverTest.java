@@ -8,6 +8,11 @@ public class SolverTest {
     private static final String FILE_PREFIX = "puzzle";
     private static final String FILE_POSTFIX = ".txt";
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCornerCase() {
+        new Solver(null);
+    }
+
     @Test
     public void test1() {
         int[][] initialBlocks = new int[][]{

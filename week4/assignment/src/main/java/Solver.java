@@ -7,6 +7,8 @@ public class Solver {
     private final Node finalNode;
 
     public Solver(Board initial) {
+        if (initial == null) throw new IllegalArgumentException();
+
         MinPQ<Node> pq = new MinPQ<>();
         pq.insert(new Node(initial, null));
 
