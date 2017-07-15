@@ -45,6 +45,7 @@ public class Solver {
 
             for (Board neighbor : node.board.neighbors()) {
                 Node newNode = makeNode(neighbor, node);
+                if (node.prevNode != null && newNode.board.equals(node.prevNode.board)) continue;
                 pq.insert(newNode);
             }
         }

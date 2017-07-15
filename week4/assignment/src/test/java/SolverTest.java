@@ -28,6 +28,11 @@ public class SolverTest {
     }
 
     @Test
+    public void testSingleSolvableFile() {
+        runSolvableFromFile("17");
+    }
+
+    @Test
     public void testSolvableFiles() {
         for (int i = 0; i <= 50; i++) {
             runSolvableFromFile(String.format("%02d", i));
