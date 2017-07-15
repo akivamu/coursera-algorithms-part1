@@ -31,24 +31,33 @@ public class SolverTest {
     @Ignore
     @Test
     public void testSingleSolvableFile() {
-        runSolvableFromFile("27");
+        runFile("puzzle27.txt", "27");
+    }
+
+    @Test
+    public void testSingleUnsolvableFile() {
+        runFile("puzzle2x2-unsolvable1.txt", null);
+        runFile("puzzle2x2-unsolvable2.txt", null);
+        runFile("puzzle2x2-unsolvable3.txt", null);
+        runFile("puzzle3x3-unsolvable.txt", null);
+        runFile("puzzle3x3-unsolvable1.txt", null);
+        runFile("puzzle3x3-unsolvable2.txt", null);
+        runFile("puzzle4x4-unsolvable.txt", null);
     }
 
     @Test
     public void testSolvableFiles() {
         for (int i = 0; i <= 26; i++) {
-            runSolvableFromFile(String.format("%02d", i));
+            String movesStr = String.format("%02d", i);
+            runFile(FILE_PREFIX + movesStr + FILE_POSTFIX, movesStr);
         }
     }
 
-    private void runSolvableFromFile(String T) {
-        String fileName = FILE_PREFIX + T + FILE_POSTFIX;
-        System.out.println("Testing solvable file: " + fileName);
-
-        int moves = Integer.parseInt(T);
+    private void runFile(String fileName, String movesStr) {
+        System.out.println("Testing " + (movesStr != null ? "solvable" : "unsolvable") + " file: " + fileName);
 
         // create initial board from file
-        In in = new In(FILE_PREFIX + T + FILE_POSTFIX);
+        In in = new In(fileName);
         int n = in.readInt();
         int[][] blocks = new int[n][n];
         for (int i = 0; i < n; i++)
@@ -59,10 +68,15 @@ public class SolverTest {
         // solve the puzzle
         Solver solver = new Solver(initial);
 
-        Assert.assertTrue(solver.isSolvable());
-        Assert.assertEquals(moves, solver.moves());
-        StdOut.println("Minimum number of moves = " + solver.moves());
-        for (Board board : solver.solution())
-            StdOut.println(board);
+        if (movesStr != null) {
+            Assert.assertTrue(solver.isSolvable());
+            Assert.assertEquals(Integer.parseInt(movesStr), solver.moves());
+
+            StdOut.println("Minimum number of moves = " + solver.moves());
+            for (Board board : solver.solution())
+                StdOut.println(board);
+        } else {
+            Assert.assertFalse(solver.isSolvable());
+        }
     }
 }

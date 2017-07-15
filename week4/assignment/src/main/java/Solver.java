@@ -10,11 +10,20 @@ public class Solver {
         MinPQ<Node> pq = new MinPQ<>();
         pq.insert(new Node(initial, null));
 
-        while (!pq.isEmpty()) {
+        MinPQ<Node> auxPq = new MinPQ<>();
+        auxPq.insert(new Node(initial.twin(), null));
+
+        while (!pq.isEmpty() || !auxPq.isEmpty()) {
             Node node = pq.delMin();
+            Node auxNode = auxPq.delMin();
 
             if (node.board.isGoal()) {
                 finalNode = node;
+                return;
+            }
+
+            if (auxNode.board.isGoal()) {
+                finalNode = null;
                 return;
             }
 
@@ -22,6 +31,12 @@ public class Solver {
                 Node newNode = new Node(neighbor, node);
                 if (node.prevNode != null && newNode.board.equals(node.prevNode.board)) continue;
                 pq.insert(newNode);
+            }
+
+            for (Board neighbor : auxNode.board.neighbors()) {
+                Node newNode = new Node(neighbor, auxNode);
+                if (auxNode.prevNode != null && newNode.board.equals(auxNode.prevNode.board)) continue;
+                auxPq.insert(newNode);
             }
         }
 
