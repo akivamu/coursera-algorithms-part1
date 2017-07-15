@@ -1,0 +1,13 @@
+dependencies {
+    compile project(':common')
+    testCompile 'junit:junit:4+'
+}
+
+task dist(type: Zip) {
+    dependsOn build
+    from 'src/main/java/'
+    include 'BruteCollinearPoints.java'
+    include 'FastCollinearPoints.java'
+    include 'Point.java'
+    archiveName "collinear.zip"
+}

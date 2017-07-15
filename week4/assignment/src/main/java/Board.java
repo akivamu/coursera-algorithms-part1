@@ -148,14 +148,15 @@ public class Board {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int[] row : blocks) {
-            for (int col : row) {
-                sb.append(col);
-                sb.append(" ");
+        StringBuilder s = new StringBuilder();
+        int n = dimension();
+        s.append(n + "\n");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                s.append(String.format("%2d ", blocks[i][j]));
             }
-            sb.append(System.getProperty("line.separator"));
+            s.append("\n");
         }
-        return sb.toString();
+        return s.toString();
     }
 }
