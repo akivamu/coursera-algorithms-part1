@@ -29,7 +29,7 @@ public class SolverTest {
 
     @Test
     public void testSingleSolvableFile() {
-        runSolvableFromFile("17");
+        runSolvableFromFile("27");
     }
 
     @Test

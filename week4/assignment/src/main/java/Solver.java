@@ -33,7 +33,7 @@ public class Solver {
     }
 
     public Solver(Board initial) {
-        pq.insert(makeNode(initial, null));
+        pq.insert(new Node(initial, null));
 
         while (!pq.isEmpty()) {
             Node node = pq.delMin();
@@ -44,23 +44,11 @@ public class Solver {
             }
 
             for (Board neighbor : node.board.neighbors()) {
-                Node newNode = makeNode(neighbor, node);
+                Node newNode = new Node(neighbor, node);
                 if (node.prevNode != null && newNode.board.equals(node.prevNode.board)) continue;
                 pq.insert(newNode);
             }
         }
-    }
-
-    private Node makeNode(Board board, Node prevNode) {
-        Node node = new Node();
-        node.board = board;
-        node.prevNode = prevNode;
-        if (prevNode != null) {
-            node.moves = prevNode.moves + 1;
-        }
-        node.priority = node.board.hamming() + node.moves;
-
-        return node;
     }
 
     public boolean isSolvable() {
@@ -85,10 +73,17 @@ public class Solver {
     }
 
     private class Node implements Comparable<Node> {
-        private Board board;
-        private Node prevNode;
-        private int moves;
-        private int priority;
+        private final Board board;
+        private final Node prevNode;
+        private final int moves;
+        private final int priority;
+
+        private Node(Board board, Node prevNode) {
+            this.board = board;
+            this.prevNode = prevNode;
+            this.moves = prevNode == null ? 0 : prevNode.moves + 1;
+            this.priority = this.board.hamming() + this.moves;
+        }
 
         @Override
         public int compareTo(Node o) {
