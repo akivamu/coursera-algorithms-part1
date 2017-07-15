@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private final int[][] blocks;
 
@@ -50,7 +53,7 @@ public class Board {
     }
 
     public Board twin() {
-        Board twin = new Board(cloneArray(blocks));
+        Board twin = new Board(cloneMatrix(blocks));
         int rowA = -1, colA = -1;
         for (int row = 0; row < dimension(); row++) {
             for (int col = 0; col < dimension(); col++) {
@@ -69,7 +72,7 @@ public class Board {
         return twin;
     }
 
-    private static int[][] cloneArray(int[][] src) {
+    private static int[][] cloneMatrix(int[][] src) {
         int length = src.length;
         int[][] target = new int[length][src[0].length];
         for (int i = 0; i < length; i++) {
@@ -94,9 +97,54 @@ public class Board {
         return true;
     }
 
+    private void swapBlocks(int[][] matrix, int rowA, int colA, int rowB, int colB) {
+        int tmp = matrix[rowA][colA];
+        matrix[rowA][colA] = matrix[rowB][colB];
+        matrix[rowB][colB] = tmp;
+    }
+
+    private int[][] cloneAndSwapBlocks(int[][] matrix, int rowA, int colA, int rowB, int colB) {
+        int[][] clonedMatrix = cloneMatrix(matrix);
+        swapBlocks(clonedMatrix, rowA, colA, rowB, colB);
+        return clonedMatrix;
+    }
+
     public Iterable<Board> neighbors() {
-        // TODO
-        return null;
+        List<Board> neighbors = new ArrayList<>();
+
+        // Find blank coord
+        int blankRow = -1, blankCol = -1;
+        for (int row = 0; blankRow == -1 && row < dimension(); row++) {
+            for (int col = 0; col < dimension(); col++) {
+                if (blocks[row][col] == 0) {
+                    blankRow = row;
+                    blankCol = col;
+                    break;
+                }
+            }
+        }
+
+        // TOP
+        if (blankRow - 1 >= 0) {
+            neighbors.add(new Board(cloneAndSwapBlocks(blocks, blankRow, blankCol, blankRow - 1, blankCol)));
+        }
+
+        // BOTTOM
+        if (blankRow + 1 < dimension()) {
+            neighbors.add(new Board(cloneAndSwapBlocks(blocks, blankRow, blankCol, blankRow + 1, blankCol)));
+        }
+
+        // RIGHT
+        if (blankCol + 1 < dimension()) {
+            neighbors.add(new Board(cloneAndSwapBlocks(blocks, blankRow, blankCol, blankRow, blankCol + 1)));
+        }
+
+        // LEFT
+        if (blankCol - 1 >= 0) {
+            neighbors.add(new Board(cloneAndSwapBlocks(blocks, blankRow, blankCol, blankRow, blankCol - 1)));
+        }
+
+        return neighbors;
     }
 
     public String toString() {

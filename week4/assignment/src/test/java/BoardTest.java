@@ -118,4 +118,17 @@ public class BoardTest {
 
         System.out.println(twin);
     }
+
+    @Test
+    public void testNeighborsBoard() {
+        Board board = new Board(new int[][]{
+                {8, 1, 3},
+                {4, 0, 2},
+                {7, 6, 5}
+        });
+
+        for (Board neighbor : board.neighbors()) {
+            System.out.println(neighbor);
+        }
+    }
 }
