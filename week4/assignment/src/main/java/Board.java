@@ -45,7 +45,7 @@ public class Board {
     }
 
     public boolean isGoal() {
-        return hamming() == 0;
+        return manhattan() == 0;
     }
 
     public Board twin() {

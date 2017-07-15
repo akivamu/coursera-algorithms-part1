@@ -34,10 +34,9 @@ public class SolverTest {
         runSolvableFromFile("27");
     }
 
-    @Ignore
     @Test
     public void testSolvableFiles() {
-        for (int i = 0; i <= 50; i++) {
+        for (int i = 0; i <= 26; i++) {
             runSolvableFromFile(String.format("%02d", i));
         }
     }
