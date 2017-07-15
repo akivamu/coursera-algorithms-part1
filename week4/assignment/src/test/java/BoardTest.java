@@ -106,4 +106,16 @@ public class BoardTest {
         Assert.assertTrue(board3.equals(board4));
     }
 
+    @Test
+    public void testTwinBoard() {
+        Board board1 = new Board(new int[][]{
+                {0, 2, 3},
+                {4, 5, 6},
+                {7, 1, 8}
+        });
+
+        Board twin = board1.twin();
+
+        System.out.println(twin);
+    }
 }

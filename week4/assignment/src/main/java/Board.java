@@ -50,8 +50,32 @@ public class Board {
     }
 
     public Board twin() {
-        // TODO
-        return null;
+        Board twin = new Board(cloneArray(blocks));
+        int rowA = -1, colA = -1;
+        for (int row = 0; row < dimension(); row++) {
+            for (int col = 0; col < dimension(); col++) {
+                if (blocks[row][col] != 0) {
+                    if (rowA != -1) {
+                        twin.blocks[row][col] = blocks[rowA][colA];
+                        twin.blocks[rowA][colA] = blocks[row][col];
+                        return twin;
+                    } else {
+                        rowA = row;
+                        colA = col;
+                    }
+                }
+            }
+        }
+        return twin;
+    }
+
+    private static int[][] cloneArray(int[][] src) {
+        int length = src.length;
+        int[][] target = new int[length][src[0].length];
+        for (int i = 0; i < length; i++) {
+            System.arraycopy(src[i], 0, target[i], 0, src[i].length);
+        }
+        return target;
     }
 
     public boolean equals(Object y) {
