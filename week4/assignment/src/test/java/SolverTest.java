@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SolverTest {
@@ -27,11 +28,13 @@ public class SolverTest {
         }
     }
 
+    @Ignore
     @Test
     public void testSingleSolvableFile() {
         runSolvableFromFile("27");
     }
 
+    @Ignore
     @Test
     public void testSolvableFiles() {
         for (int i = 0; i <= 50; i++) {
