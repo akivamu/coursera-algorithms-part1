@@ -152,24 +152,20 @@ public class KdTree {
 
     public Point2D nearest(Point2D p) {
         if (p == null) throw new IllegalArgumentException();
-        Point2D curNearestPoint = root.point;
-        return findNearestPoint(root, curNearestPoint, p);
+        if (root == null) return null;
+        return findNearestPoint(root, root, p).point;
     }
 
-    private Point2D findNearestPoint(Node node, Point2D curNearestPoint, Point2D searchPoint) {
-        if (node.left != null && node.left.rect.distanceSquaredTo(searchPoint) < curNearestPoint.distanceSquaredTo(searchPoint)) {
-            Point2D nextNearestPoint = findNearestPoint(node.left, curNearestPoint, searchPoint);
-            if (curNearestPoint.distanceSquaredTo(searchPoint) > nextNearestPoint.distanceSquaredTo(searchPoint)) {
-                curNearestPoint = nextNearestPoint;
-            }
-        }
-        if (node.right != null && node.right.rect.distanceSquaredTo(searchPoint) < curNearestPoint.distanceSquaredTo(searchPoint)) {
-            Point2D nextNearestPoint = findNearestPoint(node.left, curNearestPoint, searchPoint);
-            if (curNearestPoint.distanceSquaredTo(searchPoint) > nextNearestPoint.distanceSquaredTo(searchPoint)) {
-                curNearestPoint = nextNearestPoint;
-            }
-        }
-        return curNearestPoint;
+    private Node findNearestPoint(Node node, Node curNearest, Point2D searchPoint) {
+        if (node == null) return curNearest;
+
+        double curDistance = searchPoint.distanceSquaredTo(curNearest.point);
+        if (curDistance < node.rect.distanceSquaredTo(searchPoint)) return curNearest;
+
+        curNearest = findNearestPoint(node.left, curNearest, searchPoint);
+        curNearest = findNearestPoint(node.right, curNearest, searchPoint);
+
+        return curNearest;
     }
 
     private class Node {
