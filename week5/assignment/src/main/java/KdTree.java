@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class KdTree {
     private Node root;
@@ -135,14 +137,14 @@ public class KdTree {
 
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null) throw new IllegalArgumentException();
-        List<Point2D> insidePoints = new ArrayList<>();
+        Set<Point2D> insidePoints = new TreeSet<>();
 
         findInNode(root, rect, insidePoints);
 
         return insidePoints;
     }
 
-    private void findInNode(Node node, RectHV rect, List<Point2D> insidePoints) {
+    private void findInNode(Node node, RectHV rect, Set<Point2D> insidePoints) {
         if (node == null || !rect.intersects(node.rect)) return;
 
         insidePoints.add(node.point);

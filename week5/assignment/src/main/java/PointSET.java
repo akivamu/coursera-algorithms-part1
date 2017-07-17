@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.RectHV;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class PointSET {
@@ -38,7 +39,7 @@ public class PointSET {
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null) throw new IllegalArgumentException();
 
-        List<Point2D> insidePoints = new ArrayList<>();
+        Set<Point2D> insidePoints = new TreeSet<>();
         for (Point2D point : points) {
             if (rect.contains(point)) insidePoints.add(point);
         }
