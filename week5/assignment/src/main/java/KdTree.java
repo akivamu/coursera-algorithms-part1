@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
+import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +112,27 @@ public class KdTree {
     }
 
     public void draw() {
-        // TODO
+        draw(root);
+    }
+
+    private void draw(Node node) {
+        if (node == null) return;
+
+        StdDraw.setPenRadius(0.01);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        node.point.draw();
+
+        StdDraw.setPenRadius(0.005);
+        if (node.isHorizontal) {
+            StdDraw.setPenColor(StdDraw.BLUE);
+            StdDraw.line(node.rect.xmin(), node.point.y(), node.rect.xmax(), node.point.y());
+        } else {
+            StdDraw.setPenColor(StdDraw.RED);
+            StdDraw.line(node.point.x(), node.rect.ymin(), node.point.x(), node.rect.ymax());
+        }
+
+        draw(node.left);
+        draw(node.right);
     }
 
     public Iterable<Point2D> range(RectHV rect) {
