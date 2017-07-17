@@ -1,6 +1,9 @@
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KdTree {
     private Node root;
     private int size;
@@ -22,6 +25,7 @@ public class KdTree {
         if (root == null) {
             root = new Node(p);
             root.isHorizontal = false;
+            root.rect = new RectHV(0, 0, 1, 1);
             size++;
         } else {
             insertToNode(root, p);
@@ -29,14 +33,14 @@ public class KdTree {
     }
 
     private void insertToNode(Node node, Point2D p) {
-        if (node.point.equals(p)) return;
-        else {
+        if (!node.point.equals(p)) {
             if (!node.isHorizontal) {
                 // Vertical split
                 if (p.x() < node.point.x()) {
                     if (node.left == null) {
                         node.left = new Node(p);
                         node.left.isHorizontal = !node.isHorizontal;
+                        node.left.rect = new RectHV(node.rect.xmin(), node.rect.ymin(), node.point.x(), node.rect.ymax());
                         size++;
                     } else {
                         insertToNode(node.left, p);
@@ -45,6 +49,7 @@ public class KdTree {
                     if (node.right == null) {
                         node.right = new Node(p);
                         node.right.isHorizontal = !node.isHorizontal;
+                        node.right.rect = new RectHV(node.point.x(), node.rect.ymin(), node.rect.xmax(), node.rect.ymax());
                         size++;
                     } else {
                         insertToNode(node.right, p);
@@ -56,6 +61,7 @@ public class KdTree {
                     if (node.left == null) {
                         node.left = new Node(p);
                         node.left.isHorizontal = !node.isHorizontal;
+                        node.left.rect = new RectHV(node.rect.xmin(), node.rect.ymin(), node.rect.xmax(), node.point.y());
                         size++;
                     } else {
                         insertToNode(node.left, p);
@@ -64,6 +70,7 @@ public class KdTree {
                     if (node.right == null) {
                         node.right = new Node(p);
                         node.right.isHorizontal = !node.isHorizontal;
+                        node.right.rect = new RectHV(node.rect.xmin(), node.point.y(), node.rect.xmax(), node.rect.ymax());
                         size++;
                     } else {
                         insertToNode(node.right, p);
@@ -109,9 +116,19 @@ public class KdTree {
 
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null) throw new IllegalArgumentException();
+        List<Point2D> insidePoints = new ArrayList<>();
 
-        // TODO
-        return null;
+        findInNode(root, rect, insidePoints);
+
+        return insidePoints;
+    }
+
+    private void findInNode(Node node, RectHV rect, List<Point2D> insidePoints) {
+        if (node == null || !rect.intersects(node.rect)) return;
+
+        insidePoints.add(node.point);
+        findInNode(node.left, rect, insidePoints);
+        findInNode(node.right, rect, insidePoints);
     }
 
     public Point2D nearest(Point2D p) {
@@ -124,6 +141,7 @@ public class KdTree {
         private Point2D point;
         private Node left, right;
         private boolean isHorizontal = true;
+        private RectHV rect;
 
         public Node(Point2D point) {
             this.point = point;
