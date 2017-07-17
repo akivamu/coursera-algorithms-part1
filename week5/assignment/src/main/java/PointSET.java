@@ -46,8 +46,18 @@ public class PointSET {
 
     public Point2D nearest(Point2D p) {
         if (p == null) throw new IllegalArgumentException();
-        // TODO
-        return null;
+        Point2D nearestPoint = null;
+
+        for (Point2D point : points) {
+            if (nearestPoint == null) nearestPoint = point;
+            else {
+                if (nearestPoint.distanceTo(p) > point.distanceTo(p)) {
+                    nearestPoint = point;
+                }
+            }
+        }
+
+        return nearestPoint;
     }
 
 }

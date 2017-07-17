@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 import org.junit.Assert;
@@ -84,5 +85,44 @@ public class PointSETTest {
         for (Point2D point2D : insidePoints) {
             System.out.println(point2D);
         }
+    }
+
+    @Test
+    public void testSimpleNearest() {
+        PointSET pointSET = new PointSET();
+
+        Assert.assertEquals(null, pointSET.nearest(new Point2D(0, 0)));
+
+        pointSET.insert(new Point2D(0, 0));
+        pointSET.insert(new Point2D(0, 1));
+        pointSET.insert(new Point2D(1, 0));
+        pointSET.insert(new Point2D(0.5, 0.5));
+        pointSET.insert(new Point2D(0.25, 0.25));
+        pointSET.insert(new Point2D(0.5000001, 0));
+
+        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.5, 0.5)));
+        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.51, 0.51)));
+
+        Assert.assertNotEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.25, 0.25)));
+        Assert.assertEquals(new Point2D(0.25, 0.25), pointSET.nearest(new Point2D(0.25, 0.25)));
+
+        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(1, 1)));
+    }
+
+    @Test
+    public void testNearestFromFiles() {
+        runNearestFromFile("circle10.txt", new Point2D(0.81, 0.30), new Point2D(0.975528, 0.345492));
+        runNearestFromFile("circle10k.txt", new Point2D(0.81, 0.30), new Point2D(0.761250, 0.317125));
+    }
+
+    private void runNearestFromFile(String fileName, Point2D testPoint, Point2D nearestPoint) {
+        PointSET pointSET = new PointSET();
+
+        In in = new In(fileName);
+        while (!in.isEmpty()) {
+            pointSET.insert(new Point2D(in.readDouble(), in.readDouble()));
+        }
+
+        Assert.assertEquals(nearestPoint, pointSET.nearest(testPoint));
     }
 }
