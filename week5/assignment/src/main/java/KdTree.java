@@ -159,16 +159,12 @@ public class KdTree {
     private Node findNearestPoint(Node node, Node curNearest, Point2D searchPoint) {
         if (node == null) return curNearest;
 
-        double curDistance = searchPoint.distanceSquaredTo(curNearest.point);
-        if (curDistance < node.rect.distanceSquaredTo(searchPoint)) return curNearest;
-
-        if (node.left != null && searchPoint.distanceSquaredTo(node.left.point) < curDistance) {
-            curNearest = node.left;
-            curDistance = searchPoint.distanceSquaredTo(curNearest.point);
+        if (searchPoint.distanceSquaredTo(node.point) < searchPoint.distanceSquaredTo(curNearest.point)) {
+            curNearest = node;
         }
 
-        if (node.right != null && searchPoint.distanceSquaredTo(node.right.point) < curDistance) {
-            curNearest = node.right;
+        if (searchPoint.distanceSquaredTo(curNearest.point) < node.rect.distanceSquaredTo(searchPoint)) {
+            return curNearest;
         }
 
         curNearest = findNearestPoint(node.left, curNearest, searchPoint);

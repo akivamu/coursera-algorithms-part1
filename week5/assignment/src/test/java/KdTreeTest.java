@@ -124,6 +124,11 @@ public class KdTreeTest {
         runNearestFromFile("circle100.txt", new Point2D(0.81, 0.30), new Point2D(0.922164, 0.232087));
         runNearestFromFile("circle1000.txt", new Point2D(0.81, 0.30), new Point2D(0.920472, 0.229439));
         runNearestFromFile("circle10000.txt", new Point2D(0.81, 0.30), new Point2D(0.920132, 0.228911));
+        runNearestFromFile("input10K.txt", new Point2D(0.81, 0.30), new Point2D(0.800759, 0.296734));
+        runNearestFromFile("input20K.txt", new Point2D(0.81, 0.30), new Point2D(0.812527, 0.29948));
+        runNearestFromFile("input100K.txt", new Point2D(0.81, 0.30), new Point2D(0.809736, 0.299609));
+        runNearestFromFile("input800K.txt", new Point2D(0.81, 0.30), new Point2D(0.810137, 0.300592));
+        runNearestFromFile("input1M.txt", new Point2D(0.81, 0.30), new Point2D(0.809886, 0.3003));
     }
 
     private void runNearestFromFile(String fileName, Point2D testPoint, Point2D nearestPoint) {
@@ -136,6 +141,6 @@ public class KdTreeTest {
 
         Assert.assertEquals(nearestPoint, kdTree.nearest(testPoint));
 
-        kdTree.draw();
+//        kdTree.draw();
     }
 }
