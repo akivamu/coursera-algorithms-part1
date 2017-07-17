@@ -1,6 +1,10 @@
 import edu.princeton.cs.algs4.Point2D;
+import edu.princeton.cs.algs4.RectHV;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PointSETTest {
     @Test
@@ -59,5 +63,26 @@ public class PointSETTest {
         Assert.assertTrue(pointSET.contains(new Point2D(0.1, 0.1)));
         Assert.assertTrue(pointSET.contains(new Point2D(0.1, 0.2)));
         Assert.assertFalse(pointSET.contains(new Point2D(0.1, 0.3)));
+    }
+
+    @Test
+    public void testSimpleRange() {
+        PointSET pointSET = new PointSET();
+        pointSET.insert(new Point2D(0, 0));
+        pointSET.insert(new Point2D(0, 1));
+        pointSET.insert(new Point2D(1, 0));
+        pointSET.insert(new Point2D(0.5, 0.5));
+        pointSET.insert(new Point2D(0.25, 0.25));
+        pointSET.insert(new Point2D(0.5000001, 0));
+
+        RectHV rect = new RectHV(0, 0, 0.5, 0.5);
+        List<Point2D> insidePoints = new ArrayList<>();
+        for (Point2D point2D : pointSET.range(rect)) {
+            insidePoints.add(point2D);
+        }
+        Assert.assertEquals(3, insidePoints.size());
+        for (Point2D point2D : insidePoints) {
+            System.out.println(point2D);
+        }
     }
 }

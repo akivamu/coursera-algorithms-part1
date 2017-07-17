@@ -35,7 +35,13 @@ public class PointSET {
 
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null) throw new IllegalArgumentException();
-        return null;
+
+        List<Point2D> insidePoints = new ArrayList<>();
+        for (Point2D point : points) {
+            if (rect.contains(point)) insidePoints.add(point);
+        }
+
+        return insidePoints;
     }
 
     public Point2D nearest(Point2D p) {
