@@ -64,6 +64,8 @@ public class PointSETTest {
         Assert.assertTrue(pointSET.contains(new Point2D(0.1, 0.1)));
         Assert.assertTrue(pointSET.contains(new Point2D(0.1, 0.2)));
         Assert.assertFalse(pointSET.contains(new Point2D(0.1, 0.3)));
+
+        pointSET.draw();
     }
 
     @Test
@@ -85,6 +87,8 @@ public class PointSETTest {
         for (Point2D point2D : insidePoints) {
             System.out.println(point2D);
         }
+
+        pointSET.draw();
     }
 
     @Test
@@ -107,6 +111,8 @@ public class PointSETTest {
         Assert.assertEquals(new Point2D(0.25, 0.25), pointSET.nearest(new Point2D(0.25, 0.25)));
 
         Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(1, 1)));
+
+        pointSET.draw();
     }
 
     @Test
@@ -124,5 +130,7 @@ public class PointSETTest {
         }
 
         Assert.assertEquals(nearestPoint, pointSET.nearest(testPoint));
+
+        pointSET.draw();
     }
 }
