@@ -145,7 +145,7 @@ public class KdTree {
     private void findInNode(Node node, RectHV rect, Set<Point2D> insidePoints) {
         if (node == null || !rect.intersects(node.rect)) return;
 
-        insidePoints.add(node.point);
+        if (rect.contains(node.point)) insidePoints.add(node.point);
         findInNode(node.left, rect, insidePoints);
         findInNode(node.right, rect, insidePoints);
     }
