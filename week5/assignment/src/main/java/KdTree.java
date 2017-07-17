@@ -167,8 +167,21 @@ public class KdTree {
             return curNearest;
         }
 
-        curNearest = findNearestPoint(node.left, curNearest, searchPoint);
-        curNearest = findNearestPoint(node.right, curNearest, searchPoint);
+        // Pick
+        Node firstHalf = node.left;
+        Node secondHalf = node.right;
+        if (node.left != null && node.right != null) {
+            if (!node.isHorizontal) {
+                firstHalf = searchPoint.x() < node.point.x() ? node.left : node.right;
+                secondHalf = searchPoint.x() < node.point.x() ? node.right : node.left;
+            } else {
+                firstHalf = searchPoint.y() < node.point.y() ? node.left : node.right;
+                secondHalf = searchPoint.y() < node.point.y() ? node.right : node.left;
+            }
+        }
+
+        curNearest = findNearestPoint(firstHalf, curNearest, searchPoint);
+        curNearest = findNearestPoint(secondHalf, curNearest, searchPoint);
 
         return curNearest;
     }
