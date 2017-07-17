@@ -117,8 +117,12 @@ public class PointSETTest {
 
     @Test
     public void testNearestFromFiles() {
+        runNearestFromFile("circle4.txt", new Point2D(0.81, 0.30), new Point2D(1.0, 0.5));
         runNearestFromFile("circle10.txt", new Point2D(0.81, 0.30), new Point2D(0.975528, 0.345492));
         runNearestFromFile("circle10k.txt", new Point2D(0.81, 0.30), new Point2D(0.761250, 0.317125));
+        runNearestFromFile("circle100.txt", new Point2D(0.81, 0.30), new Point2D(0.922164, 0.232087));
+        runNearestFromFile("circle1000.txt", new Point2D(0.81, 0.30), new Point2D(0.920472, 0.229439));
+        runNearestFromFile("circle10000.txt", new Point2D(0.81, 0.30), new Point2D(0.920132, 0.228911));
     }
 
     private void runNearestFromFile(String fileName, Point2D testPoint, Point2D nearestPoint) {
