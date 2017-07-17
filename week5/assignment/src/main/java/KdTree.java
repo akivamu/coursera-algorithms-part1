@@ -162,6 +162,15 @@ public class KdTree {
         double curDistance = searchPoint.distanceSquaredTo(curNearest.point);
         if (curDistance < node.rect.distanceSquaredTo(searchPoint)) return curNearest;
 
+        if (node.left != null && searchPoint.distanceSquaredTo(node.left.point) < curDistance) {
+            curNearest = node.left;
+            curDistance = searchPoint.distanceSquaredTo(curNearest.point);
+        }
+
+        if (node.right != null && searchPoint.distanceSquaredTo(node.right.point) < curDistance) {
+            curNearest = node.right;
+        }
+
         curNearest = findNearestPoint(node.left, curNearest, searchPoint);
         curNearest = findNearestPoint(node.right, curNearest, searchPoint);
 

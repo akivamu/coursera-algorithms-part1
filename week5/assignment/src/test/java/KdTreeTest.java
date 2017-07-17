@@ -71,17 +71,17 @@ public class KdTreeTest {
 
     @Test
     public void testSimpleRange() {
-        PointSET pointSET = new PointSET();
-        pointSET.insert(new Point2D(0, 0));
-        pointSET.insert(new Point2D(0, 1));
-        pointSET.insert(new Point2D(1, 0));
-        pointSET.insert(new Point2D(0.5, 0.5));
-        pointSET.insert(new Point2D(0.25, 0.25));
-        pointSET.insert(new Point2D(0.5000001, 0));
+        KdTree kdTree = new KdTree();
+        kdTree.insert(new Point2D(0, 0));
+        kdTree.insert(new Point2D(0, 1));
+        kdTree.insert(new Point2D(1, 0));
+        kdTree.insert(new Point2D(0.5, 0.5));
+        kdTree.insert(new Point2D(0.25, 0.25));
+        kdTree.insert(new Point2D(0.5000001, 0));
 
         RectHV rect = new RectHV(0, 0, 0.5, 0.5);
         List<Point2D> insidePoints = new ArrayList<>();
-        for (Point2D point2D : pointSET.range(rect)) {
+        for (Point2D point2D : kdTree.range(rect)) {
             insidePoints.add(point2D);
         }
         Assert.assertEquals(3, insidePoints.size());
@@ -89,49 +89,53 @@ public class KdTreeTest {
             System.out.println(point2D);
         }
 
-        pointSET.draw();
+        kdTree.draw();
     }
 
     @Test
     public void testSimpleNearest() {
-        PointSET pointSET = new PointSET();
+        KdTree kdTree = new KdTree();
 
-        Assert.assertEquals(null, pointSET.nearest(new Point2D(0, 0)));
+        Assert.assertEquals(null, kdTree.nearest(new Point2D(0, 0)));
 
-        pointSET.insert(new Point2D(0, 0));
-        pointSET.insert(new Point2D(0, 1));
-        pointSET.insert(new Point2D(1, 0));
-        pointSET.insert(new Point2D(0.5, 0.5));
-        pointSET.insert(new Point2D(0.25, 0.25));
-        pointSET.insert(new Point2D(0.5000001, 0));
+        kdTree.insert(new Point2D(0, 0));
+        kdTree.insert(new Point2D(0, 1));
+        kdTree.insert(new Point2D(1, 0));
+        kdTree.insert(new Point2D(0.5, 0.5));
+        kdTree.insert(new Point2D(0.25, 0.25));
+        kdTree.insert(new Point2D(0.5000001, 0));
 
-        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.5, 0.5)));
-        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.51, 0.51)));
+        Assert.assertEquals(new Point2D(0.5, 0.5), kdTree.nearest(new Point2D(0.5, 0.5)));
+        Assert.assertEquals(new Point2D(0.5, 0.5), kdTree.nearest(new Point2D(0.51, 0.51)));
 
-        Assert.assertNotEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(0.25, 0.25)));
-        Assert.assertEquals(new Point2D(0.25, 0.25), pointSET.nearest(new Point2D(0.25, 0.25)));
+        Assert.assertNotEquals(new Point2D(0.5, 0.5), kdTree.nearest(new Point2D(0.25, 0.25)));
+        Assert.assertEquals(new Point2D(0.25, 0.25), kdTree.nearest(new Point2D(0.25, 0.25)));
 
-        Assert.assertEquals(new Point2D(0.5, 0.5), pointSET.nearest(new Point2D(1, 1)));
+        Assert.assertEquals(new Point2D(0.5, 0.5), kdTree.nearest(new Point2D(1, 1)));
 
-        pointSET.draw();
+        kdTree.draw();
     }
 
     @Test
     public void testNearestFromFiles() {
+        runNearestFromFile("circle4.txt", new Point2D(0.81, 0.30), new Point2D(1.0, 0.5));
         runNearestFromFile("circle10.txt", new Point2D(0.81, 0.30), new Point2D(0.975528, 0.345492));
         runNearestFromFile("circle10k.txt", new Point2D(0.81, 0.30), new Point2D(0.761250, 0.317125));
+        runNearestFromFile("circle100.txt", new Point2D(0.81, 0.30), new Point2D(0.922164, 0.232087));
+        runNearestFromFile("circle1000.txt", new Point2D(0.81, 0.30), new Point2D(0.920472, 0.229439));
+        runNearestFromFile("circle10000.txt", new Point2D(0.81, 0.30), new Point2D(0.920132, 0.228911));
     }
 
     private void runNearestFromFile(String fileName, Point2D testPoint, Point2D nearestPoint) {
-        PointSET pointSET = new PointSET();
+        KdTree kdTree = new KdTree();
 
         In in = new In(fileName);
         while (!in.isEmpty()) {
-            pointSET.insert(new Point2D(in.readDouble(), in.readDouble()));
+            kdTree.insert(new Point2D(in.readDouble(), in.readDouble()));
         }
 
-        Assert.assertEquals(nearestPoint, pointSET.nearest(testPoint));
+        Assert.assertEquals(nearestPoint, kdTree.nearest(testPoint));
 
-        pointSET.draw();
+        kdTree.draw();
     }
 }
