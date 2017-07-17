@@ -118,11 +118,9 @@ public class KdTree {
     private void draw(Node node) {
         if (node == null) return;
 
-        StdDraw.setPenRadius(0.01);
         StdDraw.setPenColor(StdDraw.BLACK);
         node.point.draw();
 
-        StdDraw.setPenRadius(0.005);
         if (node.isHorizontal) {
             StdDraw.setPenColor(StdDraw.BLUE);
             StdDraw.line(node.rect.xmin(), node.point.y(), node.rect.xmax(), node.point.y());
@@ -159,15 +157,15 @@ public class KdTree {
     }
 
     private Point2D findNearestPoint(Node node, Point2D curNearestPoint, Point2D searchPoint) {
-        if (node.left != null && node.left.rect.distanceTo(searchPoint) < curNearestPoint.distanceTo(searchPoint)) {
+        if (node.left != null && node.left.rect.distanceSquaredTo(searchPoint) < curNearestPoint.distanceSquaredTo(searchPoint)) {
             Point2D nextNearestPoint = findNearestPoint(node.left, curNearestPoint, searchPoint);
-            if (curNearestPoint.distanceTo(searchPoint) > nextNearestPoint.distanceTo(searchPoint)) {
+            if (curNearestPoint.distanceSquaredTo(searchPoint) > nextNearestPoint.distanceSquaredTo(searchPoint)) {
                 curNearestPoint = nextNearestPoint;
             }
         }
-        if (node.right != null && node.right.rect.distanceTo(searchPoint) < curNearestPoint.distanceTo(searchPoint)) {
+        if (node.right != null && node.right.rect.distanceSquaredTo(searchPoint) < curNearestPoint.distanceSquaredTo(searchPoint)) {
             Point2D nextNearestPoint = findNearestPoint(node.left, curNearestPoint, searchPoint);
-            if (curNearestPoint.distanceTo(searchPoint) > nextNearestPoint.distanceTo(searchPoint)) {
+            if (curNearestPoint.distanceSquaredTo(searchPoint) > nextNearestPoint.distanceSquaredTo(searchPoint)) {
                 curNearestPoint = nextNearestPoint;
             }
         }
@@ -175,7 +173,7 @@ public class KdTree {
     }
 
     private class Node {
-        private Point2D point;
+        private final Point2D point;
         private Node left, right;
         private boolean isHorizontal = true;
         private RectHV rect;

@@ -53,7 +53,7 @@ public class PointSET {
         for (Point2D point : points) {
             if (nearestPoint == null) nearestPoint = point;
             else {
-                if (nearestPoint.distanceTo(p) > point.distanceTo(p)) {
+                if (nearestPoint.distanceSquaredTo(p) > point.distanceSquaredTo(p)) {
                     nearestPoint = point;
                 }
             }
